@@ -6,6 +6,8 @@ import { MATRIX_COLUMNS, MATRIX_DATA, F1_LOW_RUNOFF, F1_MED_RUNOFF, F1_HIGH_RUNO
 import { Info } from 'lucide-react';
 
 const Results: React.FC = () => {
+  let textClass = 'text-slate-700'; // Defined to fix unused variable error if it arises in loops, though utilized below inside map.
+
   return (
     <div className="space-y-12 pb-12">
        <div className="border-b border-slate-800 pb-8">
@@ -58,7 +60,7 @@ const Results: React.FC = () => {
                     {row.values.map((val, colIndex) => {
                         // Determine background intensity based on value for DARK THEME
                         let bgClass = 'bg-slate-900 border border-slate-800';
-                        let textClass = 'text-slate-700';
+                        textClass = 'text-slate-700';
                         
                         if (val > 0) {
                             textClass = 'text-slate-200 font-bold';
@@ -72,7 +74,7 @@ const Results: React.FC = () => {
                         }
 
                         return (
-                            <div key={colIndex} className={`${bgClass} flex items-center justify-center text-xs transition-all hover:scale-105 rounded relative group cursor-default`}>
+                            <div key={colIndex} className={`${bgClass} ${textClass} flex items-center justify-center text-xs transition-all hover:scale-105 rounded relative group cursor-default`}>
                                 {val > 0 ? val : <span className="text-slate-800">·</span>}
                                 {val > 0 && (
                                     <div className="absolute bottom-full mb-2 hidden group-hover:block bg-slate-800 text-white text-[10px] p-2 rounded-lg border border-slate-700 shadow-xl z-20 whitespace-nowrap">
@@ -128,16 +130,19 @@ const Results: React.FC = () => {
       <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-2xl">
         <h3 className="text-xl font-bold text-white mb-6">Visual Comparison (Wet vs Dry Years)</h3>
         <div className="grid md:grid-cols-2 gap-8">
+             {/* Updated to use local image from /public/assets/comparison-areal.png */}
              <div className="aspect-video bg-slate-950 rounded-xl relative group overflow-hidden border border-slate-800 hover:border-red-900/50 transition-colors">
-                <div className="absolute inset-0 bg-[url('https://picsum.photos/600/400?random=1')] bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-[url('/sri-webapp/assets/comparison-areal.png')] bg-cover bg-center opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"></div>
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-12">
                    <span className="text-red-400 font-bold text-sm uppercase tracking-wider block mb-1">Traditional</span>
                     <span className="text-white font-bold">Areal Approach</span>
                     <p className="text-slate-400 text-xs mt-1">Smoothed, general, misses pockets of drought.</p>
                 </div>
              </div>
+             
+             {/* Updated to use local image from /public/assets/comparison-gridwise.png */}
              <div className="aspect-video bg-slate-950 rounded-xl relative group overflow-hidden border border-slate-800 hover:border-cyan-900/50 transition-colors">
-                <div className="absolute inset-0 bg-[url('https://picsum.photos/600/400?random=2')] bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all duration-700"></div>
+                <div className="absolute inset-0 bg-[url('/sri-webapp/assets/comparison-gridwise.png')] bg-cover bg-center opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"></div>
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-12">
                     <span className="text-cyan-400 font-bold text-sm uppercase tracking-wider block mb-1">Proposed</span>
                     <span className="text-white font-bold">Grid-wise Approach</span>
@@ -146,7 +151,7 @@ const Results: React.FC = () => {
              </div>
         </div>
         <p className="text-xs text-slate-600 mt-4 text-center">
-            * Conceptual visualization based on paper data.
+            * Visualization of SRI results.
         </p>
       </div>
     </div>

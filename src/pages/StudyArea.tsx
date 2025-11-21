@@ -53,8 +53,8 @@ const StudyArea: React.FC = () => {
         </div>
 
         <div className="bg-slate-800/30 rounded-2xl flex flex-col items-center justify-center min-h-[350px] border border-slate-700 relative overflow-hidden group">
-           {/* Placeholder for Figure 1 */}
-           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550622917-649c4319a855?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-30 transition-all duration-700"></div>
+           {/* Updated to use local image from /public/assets/study-area.png */}
+           <div className="absolute inset-0 bg-[url('/sri-webapp/assets/study-area.png')] bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700"></div>
            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
            
            <div className="relative z-10 text-center p-8">

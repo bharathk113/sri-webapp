@@ -102,7 +102,7 @@ const Results: React.FC = () => {
         <div className="mb-8 border-b border-slate-800 pb-6">
             <h3 className="text-2xl font-bold text-white mb-2">Agreement Comparison (F1 Score)</h3>
             <p className="text-slate-400">
-                Higher F1 score indicates better agreement. <span className="text-red-400">Low scores at high return periods (>100)</span> indicate significant disagreement, proving the Areal method fails to capture extremes.
+                Higher F1 score indicates better agreement. <span className="text-red-400">Low scores at high return periods ( &gt;100)</span> indicate significant disagreement, proving the Areal method fails to capture extremes.
             </p>
         </div>
 

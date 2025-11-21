@@ -1,0 +1,17 @@
+PLEASE READ CAREFULLY
+
+1. Create a folder named "assets" inside the "public" folder of your project.
+   Full Path: .../sri-webapp/public/assets/
+
+2. Place your images in this folder and rename them EXACTLY as follows:
+
+   Image 1 (Map of Godavari Basin):
+   Name: study-area.png
+   
+   Image 2 (Comparison Map - Traditional/Areal Method):
+   Name: comparison-areal.png
+
+   Image 3 (Comparison Map - Proposed/Grid-wise Method):
+   Name: comparison-gridwise.png
+
+3. Once these files are in place, run "npm run build" and "npm run deploy".
