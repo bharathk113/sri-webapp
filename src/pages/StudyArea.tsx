@@ -53,8 +53,12 @@ const StudyArea: React.FC = () => {
         </div>
 
         <div className="bg-slate-800/30 rounded-2xl flex flex-col items-center justify-center min-h-[350px] border border-slate-700 relative overflow-hidden group">
-           {/* Updated to use local image from /public/assets/study-area.png */}
-           <div className="absolute inset-0 bg-[url('/sri-webapp/assets/study-area.png')] bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700"></div>
+           {/* Updated to use HTML img tag for robust path resolution */}
+           <img 
+             src={`${import.meta.env.BASE_URL}assets/study-area.png`} 
+             alt="Godavari Basin Map"
+             className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700"
+           />
            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
            
            <div className="relative z-10 text-center p-8">

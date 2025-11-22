@@ -130,9 +130,13 @@ const Results: React.FC = () => {
       <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-2xl">
         <h3 className="text-xl font-bold text-white mb-6">Visual Comparison (Wet vs Dry Years)</h3>
         <div className="grid md:grid-cols-2 gap-8">
-             {/* Updated to use local image from /public/assets/comparison-areal.png */}
+             {/* Updated to use HTML img tag for robust path resolution */}
              <div className="aspect-video bg-slate-950 rounded-xl relative group overflow-hidden border border-slate-800 hover:border-red-900/50 transition-colors">
-                <div className="absolute inset-0 bg-[url('/sri-webapp/assets/comparison-areal.png')] bg-cover bg-center opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"></div>
+                <img 
+                  src={`${import.meta.env.BASE_URL}assets/comparison-areal.png`}
+                  alt="Traditional Areal Approach"
+                  className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
+                />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-12">
                    <span className="text-red-400 font-bold text-sm uppercase tracking-wider block mb-1">Traditional</span>
                     <span className="text-white font-bold">Areal Approach</span>
@@ -140,9 +144,13 @@ const Results: React.FC = () => {
                 </div>
              </div>
              
-             {/* Updated to use local image from /public/assets/comparison-gridwise.png */}
+             {/* Updated to use HTML img tag for robust path resolution */}
              <div className="aspect-video bg-slate-950 rounded-xl relative group overflow-hidden border border-slate-800 hover:border-cyan-900/50 transition-colors">
-                <div className="absolute inset-0 bg-[url('/sri-webapp/assets/comparison-gridwise.png')] bg-cover bg-center opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"></div>
+                <img 
+                  src={`${import.meta.env.BASE_URL}assets/comparison-gridwise.png`}
+                  alt="Proposed Grid-wise Approach"
+                  className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
+                />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-12">
                     <span className="text-cyan-400 font-bold text-sm uppercase tracking-wider block mb-1">Proposed</span>
                     <span className="text-white font-bold">Grid-wise Approach</span>
