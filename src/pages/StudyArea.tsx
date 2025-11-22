@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GODAVARI_STATS } from '../constants';
-import { CloudRain, Thermometer, Layers, Mountain } from 'lucide-react';
+import { CloudRain, Thermometer, Layers, Mountain, Maximize2 } from 'lucide-react';
+import ImageModal from '../components/ImageModal';
 
 const StudyArea: React.FC = () => {
+  const [modalImage, setModalImage] = useState<string | null>(null);
+
   return (
     <div className="space-y-12">
       <div className="border-b border-slate-800 pb-8">
@@ -52,23 +55,34 @@ const StudyArea: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-slate-800/30 rounded-2xl flex flex-col items-center justify-center min-h-[350px] border border-slate-700 relative overflow-hidden group">
-           {/* Updated to use HTML img tag for robust path resolution */}
+        {/* Map Container */}
+        <div 
+          className="bg-slate-800/30 rounded-2xl flex flex-col items-center justify-center min-h-[350px] border border-slate-700 relative overflow-hidden group cursor-zoom-in hover:border-cyan-500/40 transition-colors"
+          onClick={() => setModalImage(`${import.meta.env.BASE_URL}assets/study-area.png`)}
+        >
            <img 
              src={`${import.meta.env.BASE_URL}assets/study-area.png`} 
              alt="Godavari Basin Map"
-             className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700"
+             className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700 group-hover:scale-105"
            />
-           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
+           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent pointer-events-none"></div>
            
-           <div className="relative z-10 text-center p-8">
-             <div className="w-16 h-16 bg-slate-900/80 backdrop-blur rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-600 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+           {/* Visual Nudge Overlay */}
+           <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur p-2 rounded-lg text-cyan-400 opacity-50 group-hover:opacity-100 transition-opacity shadow-lg border border-slate-700/50">
+              <Maximize2 size={20} />
+           </div>
+
+           <div className="relative z-10 text-center p-8 pointer-events-none">
+             <div className="w-16 h-16 bg-slate-900/80 backdrop-blur rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-600 shadow-[0_0_20px_rgba(0,0,0,0.5)] group-hover:border-cyan-500/50 transition-colors">
                 <Mountain className="text-cyan-500" size={32} />
              </div>
              <h4 className="font-bold text-xl text-white mb-2">Godavari Basin Map</h4>
              <p className="text-slate-400 text-sm max-w-xs mx-auto">
                Visualization of Digital Elevation Model (DEM) and Land Use patterns across the region.
              </p>
+             <div className="mt-4 inline-flex items-center text-xs text-cyan-400 font-medium opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
+                Click to expand
+             </div>
            </div>
         </div>
       </div>
@@ -84,6 +98,15 @@ const StudyArea: React.FC = () => {
           Input data includes daily gridded climate forcing data (CHIRPS) and IMD temperature data at 0.05° resolution.
         </p>
       </div>
+
+      {/* Image Modal */}
+      {modalImage && (
+        <ImageModal 
+          src={modalImage} 
+          alt="Study Area Detail" 
+          onClose={() => setModalImage(null)} 
+        />
+      )}
     </div>
   );
 };

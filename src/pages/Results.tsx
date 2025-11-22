@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer
 } from 'recharts';
 import { MATRIX_COLUMNS, MATRIX_DATA, F1_LOW_RUNOFF, F1_MED_RUNOFF, F1_HIGH_RUNOFF } from '../constants';
-import { Info } from 'lucide-react';
+import { Info, Maximize2 } from 'lucide-react';
+import ImageModal from '../components/ImageModal';
 
 const Results: React.FC = () => {
-  let textClass = 'text-slate-700'; // Defined to fix unused variable error if it arises in loops, though utilized below inside map.
+  const [modalImage, setModalImage] = useState<{src: string, alt: string} | null>(null);
 
   return (
     <div className="space-y-12 pb-12">
@@ -60,7 +61,7 @@ const Results: React.FC = () => {
                     {row.values.map((val, colIndex) => {
                         // Determine background intensity based on value for DARK THEME
                         let bgClass = 'bg-slate-900 border border-slate-800';
-                        textClass = 'text-slate-700';
+                        let textClass = 'text-slate-700';
                         
                         if (val > 0) {
                             textClass = 'text-slate-200 font-bold';
@@ -130,28 +131,55 @@ const Results: React.FC = () => {
       <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-2xl">
         <h3 className="text-xl font-bold text-white mb-6">Visual Comparison (Wet vs Dry Years)</h3>
         <div className="grid md:grid-cols-2 gap-8">
-             {/* Updated to use HTML img tag for robust path resolution */}
-             <div className="aspect-video bg-slate-950 rounded-xl relative group overflow-hidden border border-slate-800 hover:border-red-900/50 transition-colors">
+             
+             {/* Traditional Approach Image */}
+             <div 
+                className="aspect-video bg-slate-950 rounded-xl relative group overflow-hidden border border-slate-800 hover:border-red-900/50 transition-colors cursor-zoom-in"
+                onClick={() => setModalImage({
+                    src: `${import.meta.env.BASE_URL}assets/comparison-areal.png`,
+                    alt: 'Traditional Areal Approach Result'
+                })}
+             >
                 <img 
                   src={`${import.meta.env.BASE_URL}assets/comparison-areal.png`}
                   alt="Traditional Areal Approach"
-                  className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
+                  className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-12">
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors pointer-events-none"></div>
+                
+                {/* Nudge Overlay */}
+                <div className="absolute top-3 right-3 bg-black/50 backdrop-blur p-1.5 rounded text-white opacity-0 group-hover:opacity-100 transition-opacity border border-white/10">
+                    <Maximize2 size={16} />
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-12 pointer-events-none">
                    <span className="text-red-400 font-bold text-sm uppercase tracking-wider block mb-1">Traditional</span>
                     <span className="text-white font-bold">Areal Approach</span>
                     <p className="text-slate-400 text-xs mt-1">Smoothed, general, misses pockets of drought.</p>
                 </div>
              </div>
              
-             {/* Updated to use HTML img tag for robust path resolution */}
-             <div className="aspect-video bg-slate-950 rounded-xl relative group overflow-hidden border border-slate-800 hover:border-cyan-900/50 transition-colors">
+             {/* Proposed Approach Image */}
+             <div 
+                className="aspect-video bg-slate-950 rounded-xl relative group overflow-hidden border border-slate-800 hover:border-cyan-900/50 transition-colors cursor-zoom-in"
+                onClick={() => setModalImage({
+                    src: `${import.meta.env.BASE_URL}assets/comparison-gridwise.png`,
+                    alt: 'Proposed Grid-wise Approach Result'
+                })}
+             >
                 <img 
                   src={`${import.meta.env.BASE_URL}assets/comparison-gridwise.png`}
                   alt="Proposed Grid-wise Approach"
-                  className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700"
+                  className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-12">
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors pointer-events-none"></div>
+
+                {/* Nudge Overlay */}
+                <div className="absolute top-3 right-3 bg-black/50 backdrop-blur p-1.5 rounded text-white opacity-0 group-hover:opacity-100 transition-opacity border border-white/10">
+                    <Maximize2 size={16} />
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 pt-12 pointer-events-none">
                     <span className="text-cyan-400 font-bold text-sm uppercase tracking-wider block mb-1">Proposed</span>
                     <span className="text-white font-bold">Grid-wise Approach</span>
                      <p className="text-slate-400 text-xs mt-1">Detailed, precise, identifies extreme localities.</p>
@@ -159,9 +187,18 @@ const Results: React.FC = () => {
              </div>
         </div>
         <p className="text-xs text-slate-600 mt-4 text-center">
-            * Visualization of SRI results.
+            * Click on the maps to view high-resolution comparison.
         </p>
       </div>
+
+      {/* Modal Render */}
+      {modalImage && (
+        <ImageModal 
+            src={modalImage.src} 
+            alt={modalImage.alt} 
+            onClose={() => setModalImage(null)} 
+        />
+      )}
     </div>
   );
 };
